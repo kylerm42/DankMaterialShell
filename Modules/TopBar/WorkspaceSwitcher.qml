@@ -164,12 +164,9 @@ Rectangle {
         return 1
     }
 
-    readonly property real horizontalPadding: SettingsData.topBarNoBackground ? 2 : Math.max(Theme.spacingS, SettingsData.topBarInnerPadding)
+    readonly property real padding: (widgetHeight - workspaceRow.implicitHeight) / 2
     
-    width: SettingsData.showWorkspacePadding ? Math.max(
-                                                   120,
-                                                   workspaceRow.implicitWidth + horizontalPadding * 2) : workspaceRow.implicitWidth
-                                               + horizontalPadding * 2
+    width: workspaceRow.implicitWidth + padding * 2
     height: widgetHeight
     radius: SettingsData.topBarNoBackground ? 0 : Theme.cornerRadius
     color: {
@@ -366,7 +363,7 @@ Rectangle {
                     visible: SettingsData.showWorkspaceApps && icons.length > 0
 
                     Repeater {
-                        model: icons.slice(0, 3)
+                        model: icons.slice(0, SettingsData.maxWorkspaceIcons)
                         delegate: Item {
                             width: 18
                             height: 18
