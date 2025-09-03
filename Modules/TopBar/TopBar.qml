@@ -186,8 +186,15 @@ PanelWindow {
                 result = result || vpnPopoutLoader.item.shouldBeVisible
             if (typeof controlCenterLoader !== "undefined" && controlCenterLoader.item)
                 result = result || controlCenterLoader.item.shouldBeVisible
-            if (typeof notepadModalLoader !== "undefined" && notepadModalLoader.item)
-                result = result || notepadModalLoader.item.visible
+            if (typeof notepadSlideoutVariants !== "undefined" && notepadSlideoutVariants.instances) {
+                for (var i = 0; i < notepadSlideoutVariants.instances.length; i++) {
+                    var instance = notepadSlideoutVariants.instances[i]
+                    if (instance && instance.notepadVisible) {
+                        result = true
+                        break
+                    }
+                }
+            }
             if (typeof clipboardHistoryModalPopup !== "undefined" && clipboardHistoryModalPopup.item)
                 result = result || clipboardHistoryModalPopup.item.visible
             return result
@@ -1237,7 +1244,7 @@ PanelWindow {
                             id: notepadButtonComponent
 
                             NotepadButton {
-                                isActive: notepadModalLoader.item ? notepadModalLoader.item.visible : false
+                                isActive: false
                                 widgetHeight: root.widgetHeight
                                 barHeight: root.effectiveBarHeight
                                 section: {
@@ -1251,16 +1258,14 @@ PanelWindow {
                                         return "center"
                                     return "right"
                                 }
-                                popupTarget: {
-                                    notepadModalLoader.active = true
-                                    return notepadModalLoader.item
-                                }
                                 parentScreen: root.screen
                                 onClicked: {
-                                    notepadModalLoader.active = true
-                                    if (notepadModalLoader.item) {
-                                        notepadModalLoader.item.toggle()
-                                    }
+                                    notepadIpcProcess.command = ["qs", "-c", "dms", "ipc", "call", "notepad", "toggle"]
+                                    notepadIpcProcess.running = true
+                                }
+
+                                Process {
+                                    id: notepadIpcProcess
                                 }
                             }
                         }
