@@ -19,7 +19,6 @@ import qs.Modules.OSD
 import qs.Modules.ProcessList
 import qs.Modules.Settings
 import qs.Modules.TopBar
-import "./Modules" as Modules
 import qs.Services
 
 ShellRoot {
@@ -286,13 +285,14 @@ ShellRoot {
 
     }
 
-    Variants {
-        id: notepadSlideoutVariants
-        model: Quickshell.screens
-
-        delegate: Modules.NotepadSlideout {
+    LazyLoader {
+        id: notepadSlideoutLoader
+        
+        active: false
+        
+        NotepadSlideout {
             id: notepadSlideout
-            modelData: item
+            modelData: Quickshell.screens.length > 0 ? Quickshell.screens[0] : null
         }
     }
 
@@ -388,36 +388,27 @@ ShellRoot {
 
     IpcHandler {
         function open() {
-            var primaryScreen = Quickshell.screens.length > 0 ? Quickshell.screens[0] : null
-            for (var i = 0; i < notepadSlideoutVariants.instances.length; i++) {
-                var instance = notepadSlideoutVariants.instances[i]
-                if (instance.modelData === primaryScreen) {
-                    instance.show()
-                    return "NOTEPAD_OPEN_SUCCESS"
-                }
+            notepadSlideoutLoader.active = true
+            if (notepadSlideoutLoader.item) {
+                notepadSlideoutLoader.item.show()
+                return "NOTEPAD_OPEN_SUCCESS"
             }
             return "NOTEPAD_OPEN_FAILED"
         }
 
         function close() {
-            for (var i = 0; i < notepadSlideoutVariants.instances.length; i++) {
-                var instance = notepadSlideoutVariants.instances[i]
-                if (instance.notepadVisible) {
-                    instance.hide()
-                    return "NOTEPAD_CLOSE_SUCCESS"
-                }
+            if (notepadSlideoutLoader.item && notepadSlideoutLoader.item.notepadVisible) {
+                notepadSlideoutLoader.item.hide()
+                return "NOTEPAD_CLOSE_SUCCESS"
             }
             return "NOTEPAD_CLOSE_FAILED"
         }
 
         function toggle() {
-            var primaryScreen = Quickshell.screens.length > 0 ? Quickshell.screens[0] : null
-            for (var i = 0; i < notepadSlideoutVariants.instances.length; i++) {
-                var instance = notepadSlideoutVariants.instances[i]
-                if (instance.modelData === primaryScreen) {
-                    instance.toggle()
-                    return "NOTEPAD_TOGGLE_SUCCESS"
-                }
+            notepadSlideoutLoader.active = true
+            if (notepadSlideoutLoader.item) {
+                notepadSlideoutLoader.item.toggle()
+                return "NOTEPAD_TOGGLE_SUCCESS"
             }
             return "NOTEPAD_TOGGLE_FAILED"
         }

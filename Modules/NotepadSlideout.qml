@@ -1,13 +1,17 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import QtCore
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
 import qs.Common
 import qs.Modals
+import qs.Modals.FileBrowser
 import qs.Services
 import qs.Widgets
+import qs.Modals.Settings
+import qs.Modals.Spotlight
 
 pragma ComponentBehavior: Bound
 
@@ -19,7 +23,6 @@ PanelWindow {
     property string currentFileName: ""
     property bool hasUnsavedChanges: false
     property url currentFileUrl
-    property var targetScreen: null
     property var modelData: null
     property bool animatingOut: false
 
@@ -62,20 +65,22 @@ PanelWindow {
         anchors.fill: parent
         enabled: notepadVisible && !animatingOut
         onClicked: mouse => {
-            var localPos = mapToItem(contentRect, mouse.x, mouse.y)
-            if (localPos.x < 0 || localPos.x > contentRect.width || localPos.y < 0 || localPos.y > contentRect.height) {
+            var localPos = mapToItem(notepadPanel, mouse.x, mouse.y)
+            if (localPos.x < 0 || localPos.x > notepadPanel.width || localPos.y < 0 || localPos.y > notepadPanel.height) {
                 hide()
             }
         }
     }
 
     StyledRect {
-        id: contentRect
+        id: notepadPanel
         
         anchors.fill: parent
         color: Theme.surfaceContainer
         border.color: Theme.outlineMedium
         border.width: 1
+        
+        focus: true  // Enable keyboard focus
         
         transform: Translate {
             x: notepadVisible ? 0 : 480
@@ -84,6 +89,32 @@ PanelWindow {
                 NumberAnimation {
                     duration: Theme.longDuration
                     easing.type: Theme.emphasizedEasing
+                }
+            }
+        }
+
+        // Keyboard shortcuts
+        Keys.onPressed: (event) => {
+            if (event.modifiers & Qt.ControlModifier) {
+                switch (event.key) {
+                case Qt.Key_S:
+                    event.accepted = true;
+                    root.fileDialogOpen = true
+                    saveBrowser.open()
+                    break;
+                case Qt.Key_O:
+                    event.accepted = true;
+                    root.fileDialogOpen = true
+                    loadBrowser.open()
+                    break;
+                case Qt.Key_N:
+                    event.accepted = true;
+                    SessionData.notepadContent = ""
+                    root.currentFileName = ""
+                    root.currentFileUrl = ""
+                    root.hasUnsavedChanges = false
+                    textArea.forceActiveFocus()
+                    break;
                 }
             }
         }
@@ -243,11 +274,11 @@ PanelWindow {
                             iconColor: Theme.surfaceText
                             hoverColor: Theme.primaryHover
                             onClicked: {
-                                textArea.text = ""
                                 SessionData.notepadContent = ""
                                 root.currentFileName = ""
                                 root.currentFileUrl = ""
                                 root.hasUnsavedChanges = false
+                                textArea.forceActiveFocus()
                             }
                         }
                         StyledText {
