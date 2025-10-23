@@ -99,6 +99,7 @@ Singleton {
     property bool topBarNoBackground: false
     property bool lockScreenShowPowerActions: true
     property bool hideBrightnessSlider: false
+    property bool skipPowerConfirmation: false
     property int notificationTimeoutLow: 5000
     property int notificationTimeoutNormal: 5000
     property int notificationTimeoutCritical: 0
@@ -267,6 +268,7 @@ Singleton {
                 topBarNoBackground = settings.topBarNoBackground !== undefined ? settings.topBarNoBackground : false
                 lockScreenShowPowerActions = settings.lockScreenShowPowerActions !== undefined ? settings.lockScreenShowPowerActions : true
                 hideBrightnessSlider = settings.hideBrightnessSlider !== undefined ? settings.hideBrightnessSlider : false
+                skipPowerConfirmation = settings.skipPowerConfirmation !== undefined ? settings.skipPowerConfirmation : false
                 screenPreferences = settings.screenPreferences !== undefined ? settings.screenPreferences : ({})
                 applyStoredTheme()
                 detectAvailableIconThemes()
@@ -362,6 +364,7 @@ Singleton {
                                                 "topBarNoBackground": topBarNoBackground,
                                                 "lockScreenShowPowerActions": lockScreenShowPowerActions,
                                                 "hideBrightnessSlider": hideBrightnessSlider,
+                                                "skipPowerConfirmation": skipPowerConfirmation,
                                                 "notificationTimeoutLow": notificationTimeoutLow,
                                                 "notificationTimeoutNormal": notificationTimeoutNormal,
                                                 "notificationTimeoutCritical": notificationTimeoutCritical,
@@ -947,6 +950,11 @@ Singleton {
 
     function setHideBrightnessSlider(enabled) {
         hideBrightnessSlider = enabled
+        saveSettings()
+    }
+
+    function setSkipPowerConfirmation(enabled) {
+        skipPowerConfirmation = enabled
         saveSettings()
     }
 

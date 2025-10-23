@@ -33,6 +33,23 @@ ShellRoot {
         DisplayService.nightModeEnabled
     }
 
+    function executePowerAction(action) {
+        switch (action) {
+        case "logout":
+            SessionService.logout()
+            break
+        case "suspend":
+            SessionService.suspend()
+            break
+        case "reboot":
+            SessionService.reboot()
+            break
+        case "poweroff":
+            SessionService.poweroff()
+            break
+        }
+    }
+
     WallpaperBackground {}
 
     Lock {
@@ -112,25 +129,16 @@ ShellRoot {
             id: controlCenterPopout
 
             onPowerActionRequested: (action, title, message) => {
-                                        powerConfirmModalLoader.active = true
-                                        if (powerConfirmModalLoader.item) {
-                                            powerConfirmModalLoader.item.confirmButtonColor = action === "poweroff" ? Theme.error : action === "reboot" ? Theme.warning : Theme.primary
-                                            powerConfirmModalLoader.item.show(title, message, function () {
-                                                switch (action) {
-                                                case "logout":
-                                                    SessionService.logout()
-                                                    break
-                                                case "suspend":
-                                                    SessionService.suspend()
-                                                    break
-                                                case "reboot":
-                                                    SessionService.reboot()
-                                                    break
-                                                case "poweroff":
-                                                    SessionService.poweroff()
-                                                    break
-                                                }
-                                            }, function () {})
+                                        if (SettingsData.skipPowerConfirmation) {
+                                            root.executePowerAction(action)
+                                        } else {
+                                            powerConfirmModalLoader.active = true
+                                            if (powerConfirmModalLoader.item) {
+                                                powerConfirmModalLoader.item.confirmButtonColor = action === "poweroff" ? Theme.error : action === "reboot" ? Theme.warning : Theme.primary
+                                                powerConfirmModalLoader.item.show(title, message, function () {
+                                                    root.executePowerAction(action)
+                                                }, function () {})
+                                            }
                                         }
                                     }
             onLockRequested: {
@@ -188,25 +196,16 @@ ShellRoot {
             id: powerMenu
 
             onPowerActionRequested: (action, title, message) => {
-                                        powerConfirmModalLoader.active = true
-                                        if (powerConfirmModalLoader.item) {
-                                            powerConfirmModalLoader.item.confirmButtonColor = action === "poweroff" ? Theme.error : action === "reboot" ? Theme.warning : Theme.primary
-                                            powerConfirmModalLoader.item.show(title, message, function () {
-                                                switch (action) {
-                                                case "logout":
-                                                    SessionService.logout()
-                                                    break
-                                                case "suspend":
-                                                    SessionService.suspend()
-                                                    break
-                                                case "reboot":
-                                                    SessionService.reboot()
-                                                    break
-                                                case "poweroff":
-                                                    SessionService.poweroff()
-                                                    break
-                                                }
-                                            }, function () {})
+                                        if (SettingsData.skipPowerConfirmation) {
+                                            root.executePowerAction(action)
+                                        } else {
+                                            powerConfirmModalLoader.active = true
+                                            if (powerConfirmModalLoader.item) {
+                                                powerConfirmModalLoader.item.confirmButtonColor = action === "poweroff" ? Theme.error : action === "reboot" ? Theme.warning : Theme.primary
+                                                powerConfirmModalLoader.item.show(title, message, function () {
+                                                    root.executePowerAction(action)
+                                                }, function () {})
+                                            }
                                         }
                                     }
         }
@@ -243,6 +242,47 @@ ShellRoot {
 
         AppDrawerPopout {
             id: appDrawerPopout
+        }
+    }
+
+    // Pre-load AppDrawer after a short delay to reduce IPC response time
+    Timer {
+        interval: 500  // Wait 0.5 seconds after startup
+        running: true
+        repeat: false
+        onTriggered: {
+            if (!appDrawerLoader.active) {
+                appDrawerLoader.active = true
+            }
+        }
+    }
+
+    IpcHandler {
+        target: "appdrawer"
+
+        function show(): string {
+            appDrawerLoader.active = true
+            if (appDrawerLoader.item) {
+                appDrawerLoader.item.centerWhenCalledViaIpc = true
+                appDrawerLoader.item.show()
+            }
+            return "APPDRAWER_SHOW_SUCCESS"
+        }
+
+        function hide(): string {
+            if (appDrawerLoader.item) {
+                appDrawerLoader.item.close()
+            }
+            return "APPDRAWER_HIDE_SUCCESS"
+        }
+
+        function toggle(): string {
+            if (appDrawerLoader.item) {
+                appDrawerLoader.item.centerWhenCalledViaIpc = true
+                // Use the same immediate call pattern as the widget
+                appDrawerLoader.item.shouldBeVisible ? appDrawerLoader.item.close() : appDrawerLoader.item.open()
+            }
+            return "APPDRAWER_TOGGLE_SUCCESS"
         }
     }
 
@@ -308,25 +348,16 @@ ShellRoot {
             id: powerMenuModal
 
             onPowerActionRequested: (action, title, message) => {
-                                        powerConfirmModalLoader.active = true
-                                        if (powerConfirmModalLoader.item) {
-                                            powerConfirmModalLoader.item.confirmButtonColor = action === "poweroff" ? Theme.error : action === "reboot" ? Theme.warning : Theme.primary
-                                            powerConfirmModalLoader.item.show(title, message, function () {
-                                                switch (action) {
-                                                case "logout":
-                                                    SessionService.logout()
-                                                    break
-                                                case "suspend":
-                                                    SessionService.suspend()
-                                                    break
-                                                case "reboot":
-                                                    SessionService.reboot()
-                                                    break
-                                                case "poweroff":
-                                                    SessionService.poweroff()
-                                                    break
-                                                }
-                                            }, function () {})
+                                        if (SettingsData.skipPowerConfirmation) {
+                                            root.executePowerAction(action)
+                                        } else {
+                                            powerConfirmModalLoader.active = true
+                                            if (powerConfirmModalLoader.item) {
+                                                powerConfirmModalLoader.item.confirmButtonColor = action === "poweroff" ? Theme.error : action === "reboot" ? Theme.warning : Theme.primary
+                                                powerConfirmModalLoader.item.show(title, message, function () {
+                                                    root.executePowerAction(action)
+                                                }, function () {})
+                                            }
                                         }
                                     }
         }

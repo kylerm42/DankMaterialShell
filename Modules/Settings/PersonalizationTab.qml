@@ -1195,6 +1195,16 @@ Item {
                                        SettingsData.setLockScreenShowPowerActions(checked)
                                    }
                     }
+
+                    DankToggle {
+                        width: parent.width
+                        text: "Skip Power Confirmation"
+                        description: "Execute power actions without confirmation (also applies to control center)"
+                        checked: SettingsData.skipPowerConfirmation
+                        onToggled: checked => {
+                                       SettingsData.setSkipPowerConfirmation(checked)
+                                   }
+                    }
                 }
             }
 
