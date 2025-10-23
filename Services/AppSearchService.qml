@@ -9,7 +9,7 @@ import "../Common/fzf.js" as Fzf
 Singleton {
     id: root
 
-    property var applications: DesktopEntries.applications.values.filter(app => !app.noDisplay && !app.runInTerminal)
+    readonly property var applications: DesktopEntries.applications.values.filter(app => !app.noDisplay && !app.runInTerminal)
 
     function searchApplications(query) {
         if (!query || query.length === 0)

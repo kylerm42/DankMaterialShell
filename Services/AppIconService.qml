@@ -18,6 +18,7 @@ Singleton {
             "edge": "\uf282",
             "opera": "\uf26a",
             "brave": "\uf269",
+            "brave-browser": "\uf269",
             "zen": "\udb83\ude95",
 
             // Code Editors & IDEs
@@ -103,6 +104,7 @@ Singleton {
             "reddit": "\uf281",
             "youtube": "\uf167",
             "twitch": "\uf1e8",
+            "bluesky": "\ue28e",
 
             // Email & Calendar
             "evolution": "\uf0e0",
