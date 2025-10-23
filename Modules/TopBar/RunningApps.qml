@@ -50,9 +50,7 @@ Rectangle {
         if (SettingsData.topBarNoBackground) {
             return "transparent";
         }
-        const baseColor = Theme.secondaryHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b,
-                       baseColor.a * Theme.widgetTransparency);
+        return Theme.widgetBackgroundBase;
     }
 
     MouseArea {

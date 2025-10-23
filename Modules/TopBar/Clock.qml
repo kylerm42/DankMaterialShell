@@ -24,8 +24,7 @@ Rectangle {
             return "transparent"
         }
 
-        const baseColor = clockMouseArea.containsMouse ? Theme.primaryHover : Theme.surfaceTextHover
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency)
+        return clockMouseArea.containsMouse ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase
     }
 
     Row {

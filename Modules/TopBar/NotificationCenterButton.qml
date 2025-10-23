@@ -24,8 +24,7 @@ Rectangle {
             return "transparent";
         }
 
-        const baseColor = notificationArea.containsMouse || root.isActive ? Theme.primaryPressed : Theme.secondaryHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+        return notificationArea.containsMouse || root.isActive ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
     }
 
     DankIcon {

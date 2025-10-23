@@ -48,8 +48,7 @@ Item {
                 return "transparent";
             }
 
-            const baseColor = launcherArea.containsMouse ? Theme.primaryPressed : (SessionService.idleInhibited ? Theme.primaryHover : Theme.secondaryHover);
-            return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+            return launcherArea.containsMouse || SessionService.idleInhibited ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
         }
 
         SystemLogo {

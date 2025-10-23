@@ -29,8 +29,7 @@ Rectangle {
             return "transparent";
         }
 
-        const baseColor = mouseArea.containsMouse ? Theme.primaryHover : Theme.surfaceTextHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+        return mouseArea.containsMouse ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
     }
     clip: true
     visible: activeWindow && activeWindow.title

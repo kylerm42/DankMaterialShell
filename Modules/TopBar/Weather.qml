@@ -24,8 +24,7 @@ Rectangle {
             return "transparent";
         }
 
-        const baseColor = weatherArea.containsMouse ? Theme.primaryHover : Theme.surfaceTextHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+        return weatherArea.containsMouse ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
     }
 
     Ref {

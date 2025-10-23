@@ -228,8 +228,7 @@ Rectangle {
     color: {
         if (SettingsData.topBarNoBackground)
             return "transparent";
-        const baseColor = Theme.surfaceTextHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+        return Theme.widgetBackgroundBase;
     }
     visible: CompositorService.isNiri || CompositorService.isHyprland
 
@@ -357,7 +356,7 @@ Rectangle {
                                     text: modelData.nerdIcon || ""
                                     font.family: "FiraCode Nerd Font"
                                     font.pixelSize: 14
-                                    color: Theme.surfaceContainer
+                                    color: isActive ? Theme.surfaceContainer : Theme.surfaceText
                                     horizontalAlignment: Text.AlignHCenter
                                     verticalAlignment: Text.AlignVCenter
                                     opacity: modelData.active ? 1.0 : appMouseArea.containsMouse ? 0.8 : 0.6

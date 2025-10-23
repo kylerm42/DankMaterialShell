@@ -25,8 +25,7 @@ Rectangle {
             return "transparent";
         }
 
-        const base = clickArea.containsMouse || (popupTarget && popupTarget.shouldBeVisible) ? Theme.primaryPressed : Theme.secondaryHover;
-        return Qt.rgba(base.r, base.g, base.b, base.a * Theme.widgetTransparency);
+        return clickArea.containsMouse || (popupTarget && popupTarget.shouldBeVisible) ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
     }
 
     DankIcon {

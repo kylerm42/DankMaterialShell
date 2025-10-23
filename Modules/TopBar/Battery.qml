@@ -24,8 +24,7 @@ Rectangle {
         if (SettingsData.topBarNoBackground)
             return "transparent";
 
-        const baseColor = batteryArea.containsMouse || batteryPopupVisible ? Theme.primaryPressed : Theme.secondaryHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+        return batteryArea.containsMouse || batteryPopupVisible ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
     }
     visible: true
 

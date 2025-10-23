@@ -339,7 +339,9 @@ PanelWindow {
                                                                      "memUsage": DgopService.dgopAvailable,
                                                                      "cpuTemp": DgopService.dgopAvailable,
                                                                      "gpuTemp": DgopService.dgopAvailable,
-                                                                     "network_speed_monitor": DgopService.dgopAvailable
+                                                                     "network_speed_monitor": DgopService.dgopAvailable,
+                                                                     "systemTray": SettingsData.getFilteredScreens("systemTray").includes(root.screen),
+                                                                     "music": SettingsData.getFilteredScreens("media").includes(root.screen)
                                                                  })
 
                         function getWidgetVisible(widgetId) {
@@ -591,8 +593,7 @@ PanelWindow {
                                     if (SettingsData.topBarNoBackground) {
                                         return "transparent"
                                     }
-                                    const baseColor = clipboardArea.containsMouse ? Theme.primaryHover : Theme.secondaryHover
-                                    return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency)
+                                    return clipboardArea.containsMouse ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase
                                 }
 
                                 DankIcon {
@@ -744,7 +745,6 @@ PanelWindow {
                                 parentWindow: root
                                 parentScreen: root.screen
                                 widgetHeight: root.widgetHeight
-                                visible: SettingsData.getFilteredScreens("systemTray").includes(root.screen)
                             }
                         }
 

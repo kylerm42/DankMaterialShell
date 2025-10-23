@@ -73,8 +73,7 @@ Rectangle {
             return "transparent";
         }
 
-        const baseColor = gpuArea.containsMouse ? Theme.primaryPressed : Theme.secondaryHover;
-        return Qt.rgba(baseColor.r, baseColor.g, baseColor.b, baseColor.a * Theme.widgetTransparency);
+        return gpuArea.containsMouse ? Theme.widgetBackgroundHover : Theme.widgetBackgroundBase;
     }
     Component.onCompleted: {
         DgopService.addRef(["gpu"]);
