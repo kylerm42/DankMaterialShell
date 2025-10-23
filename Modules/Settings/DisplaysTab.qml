@@ -49,6 +49,11 @@ Item {
         "name": "System Tray",
         "description": "System tray icons",
         "icon": "notifications"
+    }, {
+        "id": "media",
+        "name": "Media Player",
+        "description": "Music player controls and now playing information",
+        "icon": "music_note"
     }]
 
     function getScreenPreferences(componentId) {

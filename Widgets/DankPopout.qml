@@ -21,6 +21,9 @@ PanelWindow {
     property var animationEasing: Theme.emphasizedEasing
     property bool shouldBeVisible: false
 
+    // Initialize as invisible
+    visible: false
+
     signal opened
     signal popoutClosed
     signal backgroundClicked
@@ -35,6 +38,13 @@ PanelWindow {
     function close() {
         shouldBeVisible = false
         closeTimer.restart()
+    }
+
+    // Ensure window is initially hidden
+    Component.onCompleted: {
+        if (!shouldBeVisible) {
+            visible = false
+        }
     }
 
     function toggle() {
@@ -77,7 +87,7 @@ PanelWindow {
 
     MouseArea {
         anchors.fill: parent
-        enabled: shouldBeVisible
+        enabled: shouldBeVisible && visible
         onClicked: mouse => {
                        var localPos = mapToItem(contentContainer, mouse.x, mouse.y)
                        if (localPos.x < 0 || localPos.x > contentContainer.width || localPos.y < 0 || localPos.y > contentContainer.height) {

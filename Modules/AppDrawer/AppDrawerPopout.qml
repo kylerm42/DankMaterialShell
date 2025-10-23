@@ -14,6 +14,12 @@ DankPopout {
 
     property string triggerSection: "left"
     property var triggerScreen: null
+    property bool centerWhenCalledViaIpc: false
+    
+    // Store the widget's trigger position separately
+    property real widgetTriggerX: Theme.spacingL
+    property real widgetTriggerY: Theme.barHeight - 4 + SettingsData.topBarSpacing + Theme.spacingXS
+    property real widgetTriggerWidth: 40
 
     // Setting to Exclusive, so virtual keyboards can send input to app drawer
     WlrLayershell.keyboardFocus: shouldBeVisible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None 
@@ -23,20 +29,21 @@ DankPopout {
     }
 
     function setTriggerPosition(x, y, width, section, screen) {
-        triggerX = x
-        triggerY = y
-        triggerWidth = width
+        centerWhenCalledViaIpc = false  // Reset flag when widget sets position
+        widgetTriggerX = x
+        widgetTriggerY = y
+        widgetTriggerWidth = width
         triggerSection = section
         triggerScreen = screen
     }
 
     popupWidth: 520
     popupHeight: 600
-    triggerX: Theme.spacingL
-    triggerY: Theme.barHeight - 4 + SettingsData.topBarSpacing + Theme.spacingXS
-    triggerWidth: 40
-    positioning: "center"
-    screen: triggerScreen
+    triggerX: centerWhenCalledViaIpc ? (screen ? (screen.width - popupWidth) / 2 : 0) : widgetTriggerX
+    triggerY: centerWhenCalledViaIpc ? (screen ? (screen.height - popupHeight) / 2 : 0) : widgetTriggerY
+    triggerWidth: centerWhenCalledViaIpc ? popupWidth : widgetTriggerWidth
+    positioning: centerWhenCalledViaIpc ? "left" : "center"
+    screen: centerWhenCalledViaIpc ? null : triggerScreen
 
     onShouldBeVisibleChanged: {
         if (shouldBeVisible) {
@@ -58,10 +65,9 @@ DankPopout {
         viewMode: SettingsData.appLauncherViewMode
         gridColumns: 4
         onAppLaunched: appDrawerPopout.close()
-        onViewModeSelected: function (mode) {
-            SettingsData.setAppLauncherViewMode(mode)
-        }
+        onViewModeSelected: mode => SettingsData.setAppLauncherViewMode(mode)
     }
+
 
     content: Component {
         Rectangle {

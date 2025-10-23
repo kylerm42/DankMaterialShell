@@ -14,6 +14,7 @@ DankModal {
 
     property bool spotlightOpen: false
     property Component spotlightContent
+    animationType: "none"
 
     function show() {
         spotlightOpen = true
