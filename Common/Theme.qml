@@ -157,30 +157,34 @@ Singleton {
     property color tempDanger: "#ff5555"
     property color success: currentThemeData.success || "#4CAF50"
 
-    property color primaryHover: Qt.rgba(primary.r, primary.g, primary.b, 0.12)
-    property color primaryHoverLight: Qt.rgba(primary.r, primary.g, primary.b, 0.08)
-    property color primaryPressed: Qt.rgba(primary.r, primary.g, primary.b, 0.16)
-    property color primarySelected: Qt.rgba(primary.r, primary.g, primary.b, 0.3)
-    property color primaryBackground: Qt.rgba(primary.r, primary.g, primary.b, 0.04)
+    property color primaryHover: currentThemeData.primaryHover || Qt.rgba(primary.r, primary.g, primary.b, 0.12)
+    property color primaryHoverLight: currentThemeData.primaryHoverLight || Qt.rgba(primary.r, primary.g, primary.b, 0.08)
+    property color primaryPressed: currentThemeData.primaryPressed || Qt.rgba(primary.r, primary.g, primary.b, 0.16)
+    property color primarySelected: currentThemeData.primarySelected || Qt.rgba(primary.r, primary.g, primary.b, 0.3)
+    property color primaryBackground: currentThemeData.primaryBackground || Qt.rgba(primary.r, primary.g, primary.b, 0.04)
 
-    property color secondaryHover: Qt.rgba(secondary.r, secondary.g, secondary.b, 0.08)
+    property color secondaryHover: currentThemeData.secondaryHover || Qt.rgba(secondary.r, secondary.g, secondary.b, 0.08)
 
-    property color surfaceHover: Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.08)
-    property color surfacePressed: Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.12)
-    property color surfaceSelected: Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.15)
-    property color surfaceLight: Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.1)
-    property color surfaceVariantAlpha: Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.2)
-    property color surfaceTextHover: Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.08)
-    property color surfaceTextAlpha: Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.3)
-    property color surfaceTextLight: Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.06)
-    property color surfaceTextMedium: Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.7)
+    property color surfaceHover: currentThemeData.surfaceHover || Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.08)
+    property color surfacePressed: currentThemeData.surfacePressed || Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.12)
+    property color surfaceSelected: currentThemeData.surfaceSelected || Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.15)
+    property color surfaceLight: currentThemeData.surfaceLight || Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.1)
+    property color surfaceVariantAlpha: currentThemeData.surfaceVariantAlpha || Qt.rgba(surfaceVariant.r, surfaceVariant.g, surfaceVariant.b, 0.2)
+    property color surfaceTextHover: currentThemeData.surfaceTextHover || Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.08)
+    property color surfaceTextAlpha: currentThemeData.surfaceTextAlpha || Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.3)
+    property color surfaceTextLight: currentThemeData.surfaceTextLight || Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.06)
+    property color surfaceTextMedium: currentThemeData.surfaceTextMedium || Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.7)
 
-    property color outlineButton: Qt.rgba(outline.r, outline.g, outline.b, 0.5)
-    property color outlineLight: Qt.rgba(outline.r, outline.g, outline.b, 0.05)
-    property color outlineMedium: Qt.rgba(outline.r, outline.g, outline.b, 0.08)
-    property color outlineStrong: Qt.rgba(outline.r, outline.g, outline.b, 0.12)
+    property color outlineButton: currentThemeData.outlineButton || Qt.rgba(outline.r, outline.g, outline.b, 0.5)
+    property color outlineLight: currentThemeData.outlineLight || Qt.rgba(outline.r, outline.g, outline.b, 0.05)
+    property color outlineMedium: currentThemeData.outlineMedium || Qt.rgba(outline.r, outline.g, outline.b, 0.08)
+    property color outlineStrong: currentThemeData.outlineStrong || Qt.rgba(outline.r, outline.g, outline.b, 0.12)
 
-    property color errorHover: Qt.rgba(error.r, error.g, error.b, 0.12)
+    property color errorHover: currentThemeData.errorHover || Qt.rgba(error.r, error.g, error.b, 0.12)
+
+    property color widgetBackground: currentThemeData.widgetBackground || surfaceTextHover
+    property color widgetBackgroundHover: currentThemeData.widgetBackgroundHover || Qt.rgba(primary.r, primary.g, primary.b, 0.12 * widgetTransparency)
+    property color widgetBackgroundBase: currentThemeData.widgetBackgroundBase || Qt.rgba(surfaceText.r, surfaceText.g, surfaceText.b, 0.08 * widgetTransparency)
 
     property color shadowMedium: Qt.rgba(0, 0, 0, 0.08)
     property color shadowStrong: Qt.rgba(0, 0, 0, 0.3)
