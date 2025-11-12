@@ -79,7 +79,7 @@ jobs:
           Release:        1%{?dist}
           Summary:        %{pkg_summary}
 
-          License:        GPL-3.0-only
+          License:        MIT
           URL:            https://github.com/AvengeMedia/DankMaterialShell
 
           Source0:        dms-qml.tar.gz
@@ -114,7 +114,7 @@ jobs:
 
           %package -n dms-cli
           Summary:        DankMaterialShell CLI tool
-          License:        GPL-3.0-only
+          License:        MIT
           URL:            https://github.com/AvengeMedia/danklinux
 
           %description -n dms-cli

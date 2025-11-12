@@ -9,7 +9,7 @@ Version:        %{version}
 Release:        0.git%{?dist}
 Summary:        %{pkg_summary}
 
-License:        GPL-3.0-only
+License:        MIT
 URL:            https://github.com/AvengeMedia/DankMaterialShell
 VCS:            {{{ git_repo_vcs }}}
 Source0:        {{{ git_repo_pack }}}

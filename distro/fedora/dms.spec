@@ -10,7 +10,7 @@ Version:        %{version}
 Release:        1%{?dist}
 Summary:        %{pkg_summary}
 
-License:        GPL-3.0-only
+License:        MIT
 URL:            https://github.com/AvengeMedia/DankMaterialShell
 VCS:            {{{ git_repo_vcs }}}
 Source0:        {{{ git_repo_pack }}}
@@ -57,7 +57,7 @@ lock screen, and comprehensive plugin system.
 
 %package -n dms-cli
 Summary:        DankMaterialShell CLI tool
-License:        GPL-3.0-only
+License:        MIT
 URL:            https://github.com/AvengeMedia/danklinux
 
 %description -n dms-cli
